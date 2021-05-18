@@ -3,5 +3,7 @@
 
 class Lexer
 {
-	//Token tokenize(text);
+public:
+	Token* tokenize(const char* text);
+	bool at_bol, has_space;
 };
