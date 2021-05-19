@@ -2,7 +2,7 @@
 #include <iostream>
 enum TypeKind
 {
-	TY_VOID,
+	//TY_VOID,
 	TY_BOOL,
 	TY_CHAR,
 	TY_SHORT,
@@ -12,8 +12,8 @@ enum TypeKind
 	TY_DOUBLE,
 	TY_LDOUBLE,
 	TY_ENUM,
-	TY_PTR,
-	TY_FUNC,
+	//TY_PTR,
+	//TY_FUNC,
 	TY_ARRAY,
 	TY_VLA, // variable-length array
 	TY_STRUCT,

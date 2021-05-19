@@ -112,18 +112,14 @@ static int read_ident(const char* start) {
 }
 // Read a punctuator token from p and returns its length.
 static int read_punct(const char* p) {
-	/*
 	static const char* kw[] = {
-	  "<<=", ">>=", "...", "==", "!=", "<=", ">=", "->", "+=",
-	  "-=", "*=", "/=", "++", "--", "%=", "&=", "|=", "^=", "&&",
-	  "||", "<<", ">>", "##",
+	  ",", ";", "[", "]", "(", ")", "#", "{", "}", ":",
 	};
 
 	for (int i = 0; i < sizeof(kw) / sizeof(*kw); i++)
 		if (startswith(p, kw[i]))
 			return strlen(kw[i]);
-	*/
-	return ispunct(*p) ? 1 : 0;
+	return 0;
 }
 // Initialize line info for all tokens.
 static void add_line_numbers(Token* tok, const char* contents) {
@@ -183,14 +179,11 @@ Token* Lexer::Tokenize(const char* contents)
 			continue;
 		}
 
-		/*
 		// Numeric literal
-		if (isdigit(*p) || (*p == '.' && isdigit(p[1]))) {
+		if (isdigit(*p)) {
 			const char* q = p++;
 			for (;;) {
-				if (p[0] && p[1] && strchr("eEpP", p[0]) && strchr("+-", p[1]))
-					p += 2;
-				else if (isalnum(*p) || *p == '.')
+				if (isalnum(*p))
 					p++;
 				else
 					break;
@@ -198,72 +191,6 @@ Token* Lexer::Tokenize(const char* contents)
 			cur = cur->next = new_token(TK_PP_NUM, q, p);
 			continue;
 		}
-
-		// String literal
-		if (*p == '"') {
-			cur = cur->next = read_string_literal(p, p);
-			p += cur->len;
-			continue;
-		}
-		
-		// UTF-8 string literal
-		if (startswith(p, "u8\"")) {
-			cur = cur->next = read_string_literal(p, p + 2);
-			p += cur->len;
-			continue;
-		}
-
-		// UTF-16 string literal
-		if (startswith(p, "u\"")) {
-			cur = cur->next = read_utf16_string_literal(p, p + 1);
-			p += cur->len;
-			continue;
-		}
-
-		// Wide string literal
-		if (startswith(p, "L\"")) {
-			cur = cur->next = read_utf32_string_literal(p, p + 1, ty_int);
-			p += cur->len;
-			continue;
-		}
-
-		// UTF-32 string literal
-		if (startswith(p, "U\"")) {
-			cur = cur->next = read_utf32_string_literal(p, p + 1, ty_uint);
-			p += cur->len;
-			continue;
-		}
-		
-		// Character literal
-		if (*p == '\'') {
-			cur = cur->next = read_char_literal(p, p, ty_int);
-			cur->val = (char)cur->val;
-			p += cur->len;
-			continue;
-		}
-
-		// UTF-16 character literal
-		if (startswith(p, "u'")) {
-			cur = cur->next = read_char_literal(p, p + 1, ty_ushort);
-			cur->val &= 0xffff;
-			p += cur->len;
-			continue;
-		}
-
-		// Wide character literal
-		if (startswith(p, "L'")) {
-			cur = cur->next = read_char_literal(p, p + 1, ty_int);
-			p += cur->len;
-			continue;
-		}
-
-		// UTF-32 character literal
-		if (startswith(p, "U'")) {
-			cur = cur->next = read_char_literal(p, p + 1, ty_uint);
-			p += cur->len;
-			continue;
-		}
-		*/
 
 		// Identifier or keyword
 		int ident_len = read_ident(p);

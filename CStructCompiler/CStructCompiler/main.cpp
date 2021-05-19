@@ -1,30 +1,31 @@
-int i;
-struct MyStruct
-{
-	//int; //error syntax
-};
-typedef unsigned int OBJID;
-
-
-// 声明语句
-// typedef Type [标识符];
-
-// warning
-int;
-struct {};
-typedef;
-typedef int;
-typedef struct {};
-typedef struct MyStruct2 {};
 #include "Lexer.h"
 // 赋值语句
 // [Type] Identifier = value;
 
 int main(int argc, char** argv)
 {
-	const char* protocal =
-		"struct MyStruct \
+	const char* protocal =" \
+		int i;\n\
+		struct MyStruct\n\
 		{\
+			//int; //error syntax\n\
+		};\
+		typedef unsigned int OBJID;\
+		// 声明语句\n\
+		// typedef Type [标识符];\n\
+	\
+		// warning\n\
+		int;\
+		struct {};\
+		typedef;\
+		typedef int;\
+		typedef struct {};\
+		typedef struct MyStruct2 {};\
+		// 赋值语句\n\
+		// [Type] Identifier = value;\n\
+		struct MyStruct \
+		{\
+			char[111];\
 			int id;\
 		};";
 	Lexer t;
