@@ -110,6 +110,17 @@ static int read_ident(const char* start) {
 		p = q;
 	}
 }
+static bool is_keyword(Token *tok) {
+	static const char*kw[] = {
+		"int", "char", "struct", "union", "short", "long", "typedef", "signed", "unsigned", "float", "double",
+	};
+
+	for (int i = 0; i < sizeof(kw) / sizeof(*kw); i++)
+		if (startswith(tok->loc, kw[i]))
+			return true;
+	return false;
+}
+
 // Read a punctuator token from p and returns its length.
 static int read_punct(const char* p) {
 	static const char* kw[] = {
@@ -197,6 +208,8 @@ Token* Lexer::Tokenize(const char* contents)
 		if (ident_len > 0) {
 			cur = cur->next = new_token(TK_IDENT, p, p + ident_len);
 			p += cur->len;
+			if (is_keyword(cur))
+				cur->kind = TK_KEYWORD;
 			continue;
 		}
 

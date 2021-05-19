@@ -86,7 +86,7 @@ enum TokenKind
 	TK_PUNCT,   // Punctuators
 	TK_KEYWORD, // Keywords
 	//TK_STR,     // String literals
-	TK_NUM,     // Numeric literals
+	//TK_NUM,     // Numeric literals
 	TK_PP_NUM,  // Preprocessing numbers
 	TK_EOF,     // End-of-file markers
 };
@@ -96,17 +96,17 @@ struct Token
 {
 	TokenKind kind;   // Token kind
 	Token* next;      // Next token
-	int64_t val;      // If kind is TK_NUM, its value
-	long double fval; // If kind is TK_NUM, its value
+	//int64_t val;      // If kind is TK_NUM, its value
+	//long double fval; // If kind is TK_NUM, its value
 	const char* loc;        // Token location
 	int len;          // Token length
-	Type* ty;         // Used if TK_NUM or TK_STR
-	char* str;        // String literal contents including terminating '\0'
+	//Type* ty;         // Used if TK_NUM or TK_STR
+	//char* str;        // String literal contents including terminating '\0'
 
 	//File* file;       // Source location
 	char* filename;   // Filename
 	int line_no;      // Line number
-	int line_delta;   // Line number
+	//int line_delta;   // Line number
 	bool at_bol;      // True if this token is at beginning of line
 	bool has_space;   // True if this token follows a space character
 	//Hideset* hideset; // For macro expansion
