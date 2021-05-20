@@ -1,5 +1,6 @@
 #pragma once
 #include "Token.h"
+#include <assert.h>
 
 class Lexer
 {
@@ -21,4 +22,16 @@ public:
 		at_bol = has_space = false;
 		return tok;
 	}
+	static Token *append_tokens(Token *tok1, Token *tok2) {
+		if (!tok1 || tok1->kind == TK_EOF)
+			return tok2;
+
+		Token *t = tok1;
+		while (t->next->kind != TK_EOF)
+			t = t->next;
+		t->next = tok2;
+		return tok1;
+	}
+
+	//TODO: ºêÌæ»»
 };

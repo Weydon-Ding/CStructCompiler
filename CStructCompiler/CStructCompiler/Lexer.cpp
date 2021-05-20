@@ -1,6 +1,6 @@
 ﻿#include "Lexer.h"
 #include <string>
-#include <assert.h>
+
 
 inline static bool startswith(const char* p, const char* q)
 {
