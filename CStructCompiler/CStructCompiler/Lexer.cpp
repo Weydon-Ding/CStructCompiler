@@ -6,7 +6,6 @@ inline static bool startswith(const char* p, const char* q)
 {
 	return strncmp(p, q, strlen(q)) == 0;
 }
-
 // Read a UTF-8-encoded Unicode code point from a source file.
 // We assume that source files are always in UTF-8.
 //
@@ -14,7 +13,7 @@ inline static bool startswith(const char* p, const char* q)
 // encoded in one to four bytes. One byte UTF-8 code points are
 // identical to ASCII. Non-ASCII characters are encoded using more
 // than one byte.
-uint32_t decode_utf8(const char** new_pos, const char* p) {
+static uint32_t decode_utf8(const char** new_pos, const char* p) {
 	if ((unsigned char)*p < 128) {
 		*new_pos = p + 1;
 		return *p;
@@ -64,7 +63,7 @@ static bool in_range(uint32_t* range, uint32_t c) {
 // For example, ¾ (U+00BE) is a valid identifier because characters in
 // 0x00BE-0x00C0 are allowed, while neither ⟘ (U+27D8) nor '　'
 // (U+3000, full-width space) are allowed because they are out of range.
-bool is_ident1(uint32_t c) {
+static bool is_ident1(uint32_t c) {
 	static uint32_t range[] = {
 	  '_', '_', 'a', 'z', 'A', 'Z', '$', '$',
 	  0x00A8, 0x00A8, 0x00AA, 0x00AA, 0x00AD, 0x00AD, 0x00AF, 0x00AF,
@@ -86,7 +85,7 @@ bool is_ident1(uint32_t c) {
 }
 // Returns true if a given character is acceptable as a non-first
 // character of an identifier.
-bool is_ident2(uint32_t c) {
+static bool is_ident2(uint32_t c) {
 	static uint32_t range[] = {
 	  '0', '9', '$', '$', 0x0300, 0x036F, 0x1DC0, 0x1DFF, 0x20D0, 0x20FF,
 	  0xFE20, 0xFE2F, -1,
@@ -120,7 +119,6 @@ static bool is_keyword(Token *tok) {
 			return true;
 	return false;
 }
-
 // Read a punctuator token from p and returns its length.
 static int read_punct(const char* p) {
 	static const char* kw[] = {
